@@ -44,4 +44,17 @@ public class UserService {
     public List<User> getAllUsers() {
        return this.repository.findAll();
     }
+
+    public User updateUser(Integer id, UserDto data) {
+        User user = repository.findUserById(id).orElseThrow(() -> new UserNotFoundException());
+        user.setEmail(data.email());
+        user.setBalance(data.balance());
+        user.setPassword(data.password());
+        user.setDocument(data.document());
+        user.setType(data.type());
+        user.setFirstName(data.firstName());
+        user.setLastName(data.lastName());
+        this.saveUser(user);
+        return user;
+    }
 }
