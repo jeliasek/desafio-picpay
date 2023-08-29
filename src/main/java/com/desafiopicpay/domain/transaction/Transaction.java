@@ -20,8 +20,8 @@ public class Transaction {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "value")
-    private BigDecimal value;
+    @Column(name = "amount", precision = 20, scale = 2)
+    private BigDecimal amount;
 
     @ManyToOne
     @JoinColumn(name = "senderId")
@@ -32,5 +32,5 @@ public class Transaction {
     private User receiver;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDate dateTransaction;
 }
