@@ -1,6 +1,7 @@
 package com.desafiopicpay.controller;
 
 import com.desafiopicpay.exception.NotEnoughBalanceException;
+import com.desafiopicpay.exception.TransactionNotAuthorized;
 import com.desafiopicpay.exception.UserNotFoundException;
 import com.desafiopicpay.exception.UserTypeInvalidException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -25,13 +25,20 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiErrors handlePedidoNaoEncontradoException(UserNotFoundException ex) {
+    public ApiErrors handleUserNotFoundException(UserNotFoundException ex) {
         return new ApiErrors(ex.getMessage());
     }
 
     @ExceptionHandler(UserTypeInvalidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrors handleNotEnoughBalanceException(UserTypeInvalidException ex) {
+    public ApiErrors handleUserTypeInvalidException(UserTypeInvalidException ex) {
+        String mensagemErro = ex.getMessage();
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(TransactionNotAuthorized.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleTransactionNotAuthorized(TransactionNotAuthorized ex) {
         String mensagemErro = ex.getMessage();
         return new ApiErrors(mensagemErro);
     }

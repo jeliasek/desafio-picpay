@@ -3,6 +3,7 @@ package com.desafiopicpay.service;
 import com.desafiopicpay.domain.transaction.Transaction;
 import com.desafiopicpay.domain.user.User;
 import com.desafiopicpay.dto.TransactionDto;
+import com.desafiopicpay.exception.TransactionNotAuthorized;
 import com.desafiopicpay.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class TransactionService {
 
         boolean isAuhorized = this.isAuthorizedTransaction(sender, transaction.amount());
         if (!isAuhorized) {
-            throw new Exception("Transaction not authorized.");
+            throw new TransactionNotAuthorized();
         }
 
         Transaction newTransaction = new Transaction();
