@@ -1,5 +1,6 @@
 package com.desafiopicpay.domain.user;
 
+import com.desafiopicpay.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
@@ -26,8 +27,8 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @CPF
-    @CNPJ
+//    @CPF
+//    @CNPJ
     @Column(name = "document", unique = true)
     private String document;
 
@@ -43,4 +44,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private UserType type;
+
+    public User(UserDto data) {
+        this.firstName = data.firstName();
+        this.lastName = data.lastName();
+        this.balance = data.balance();
+        this.email = data.email();
+        this.document = data.document();
+        this.password = data.password();
+        this.type = data.type();
+    }
 }
